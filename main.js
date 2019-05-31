@@ -23,7 +23,7 @@
   //   })
 
   function getSecondoryCam (mediaDevices) {
-    console.log(mediaDevices)
+    console.log(mediaDevices, 'camera')
   }
 
   function startup () {
