@@ -6,24 +6,21 @@
   var canvas = null
   var photo = null
   var startbutton = null
-  //
-  // function gotDevices(mediaDevices) {
-  //   select.innerHTML = '';
-  //   select.appendChild(document.createElement('option'));
-  //   let count = 1;
-  //   mediaDevices.forEach(mediaDevice => {
-  //     if (mediaDevice.kind === 'videoinput') {
-  //       const option = document.createElement('option');
-  //       option.value = mediaDevice.deviceId;
-  //       const label = mediaDevice.label || `Camera ${count++}`;
-  //       const textNode = document.createTextNode(label);
-  //       option.appendChild(textNode);
-  //       select.appendChild(option);
-  //     }
-  //   })
 
-  function getSecondoryCam (mediaDevices) {
-    console.log(mediaDevices, 'camera')
+  function gotDevices (mediaDevices) {
+    select.innerHTML = ''
+    select.appendChild(document.createElement('option'))
+    let count = 1
+    mediaDevices.forEach(mediaDevice => {
+      if (mediaDevice.kind === 'videoinput') {
+        const option = document.createElement('option')
+        option.value = mediaDevice.deviceId
+        const label = mediaDevice.label || `Camera ${count++}`
+        const textNode = document.createTextNode(label)
+        option.appendChild(textNode)
+        select.appendChild(option)
+      }
+    })
   }
 
   function startup () {
@@ -98,5 +95,5 @@
   }
 
   window.addEventListener('load', startup, false)
-  navigator.mediaDevices.enumerateDevices().then(getSecondoryCam)
+  navigator.mediaDevices.enumerateDevices().then(gotDevices)
 })()
