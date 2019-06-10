@@ -7,6 +7,9 @@
   var photo = null
   var startbutton = null
 
+  const button = document.getElementById('button')
+  const select = document.getElementById('select')
+
   function gotDevices (mediaDevices) {
     select.innerHTML = ''
     select.appendChild(document.createElement('option'))
@@ -22,12 +25,38 @@
       }
     })
   }
+  button.click('click', event => {
+    if (typeof currentStream !== 'undefined') {
+      stopMediaTracks(currentStream)
+    }
+    const videoConstraints = {}
+    if (select.value === '') {
+      videoConstraints.facingMode = 'environment'
+    } else {
+      videoConstraints.deviceId = { exact: select.value }
+    }
+    const constraints = {
+      video: videoConstraints,
+      audio: false
+    }
+
+    navigator.mediaDevices
+      .getUserMedia(constraints)
+      .then(stream => {
+        currentStream = stream
+        video.srcObject = stream
+        return navigator.mediaDevices.enumerateDevices()
+      })
+      .then(gotDevices)
+      .catch(error => {
+        console.error(error)
+      })
+  })
 
   function startup () {
     video = document.getElementById('video')
     canvas = document.getElementById('canvas')
     photo = document.getElementById('photo')
-    select = document.getElementById('select')
     startbutton = document.getElementById('startbutton')
 
     navigator.mediaDevices
