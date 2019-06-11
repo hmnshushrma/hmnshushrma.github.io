@@ -39,6 +39,8 @@ button.addEventListener('click', event => {
     video: videoConstraints,
     audio: false
   }
+
+  console.log(constraints)
   navigator.mediaDevices
     .getUserMedia(constraints)
     .then(stream => {
